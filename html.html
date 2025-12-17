@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>何恩宇 - 個人網站</title>
+    
+    <style>
+        /* ==================== 基礎設定 ==================== */
+        /* 重置所有元素的預設邊距與內距 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* 讓寬度計算包含 padding 和 border */
+        }
+
+        /* 整體頁面設定 */
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #0f172a; /* 深藍色背景 */
+            color: #e2e8f0; /* 淺灰白色文字 */
+            line-height: 1.6;
+            overflow-x: hidden; /* 防止水平捲軸 */
+        }
+
+        /* ==================== Hero Section（首頁區塊）==================== */
+        .hero {
+            min-height: 100vh; /* 至少佔滿整個視窗高度 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative; /* 為了背景動畫定位 */
+            overflow: hidden;
+        }
+
+        /* 動態漸層背景 */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                #0f172a 0%,
+                #1e293b 25%,
+                #334155 50%,
+                #1e293b 75%,
+                #0f172a 100%
+            );
+            animation: gradientMove 15s ease infinite; /* 漸層移動動畫 */
+            z-index: 0;
+        }
+
+        /* 漸層移動動畫定義 */
+        @keyframes gradientMove {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(-5%, -5%);
+            }
+            50% {
+                transform: translate(-10%, -10%);
+            }
+            75% {
+                transform: translate(-5%, -5%);
+            }
+        }
+
+        /* Hero 內容容器 */
+        .hero-container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+            position: relative; /* 確保在背景動畫之上 */
+            z-index: 1;
+        }
+
+        /* Hero 左側文字區域 */
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: #f43f5e; /* 霓虹粉色 */
+            text-shadow: 0 0 20px rgba(244, 63, 94, 0.5); /* 發光效果 */
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            color: #cbd5e1;
+        }
+
+        /* Hero 右側頭像區域 */
+        .hero-avatar {
+            flex: 0 0 300px; /* 固定寬度 300px */
+        }
+
+        /* 頭像容器（圓形） */
+        .avatar-circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%; /* 圓形 */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 0 40px rgba(244, 63, 94, 0.3),
+                0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 頭像圖片 */
+        .avatar-circle img {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* 如果沒有圖片，顯示文字 */
+        .avatar-placeholder {
+            font-size: 6rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* ==================== 區塊通用樣式 ==================== */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 區塊標題 */
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #f43f5e;
+            text-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+        }
+
+        /* ==================== Glassmorphism 卡片樣式 ==================== */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05); /* 半透明白色 */
+            backdrop-filter: blur(10px); /* 毛玻璃模糊效果 */
+            -webkit-backdrop-filter: blur(10px); /* Safari 支援 */
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* 細邊框 */
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1); /* 內陰影增加立體感 */
+            transition: transform 0.3s ease; /* 平滑過渡效果 */
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px); /* 滑鼠移上去時上浮 */
+        }
+
+        /* ==================== About Section（關於我）==================== */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 三欄均分 */
+            gap: 30px;
+        }
+
+        .about-card h3 {
+            color: #f43f5e;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #f43f5e;
+            padding-bottom: 10px;
+        }
+
+        .about-card ul {
+            list-style: none;
+        }
+
+        .about-card li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        /* 列表項目前的裝飾點 */
+        .about-card li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: #f43f5e;
+            font-size: 1.2rem;
+        }
+
+        /* ==================== Portfolio Section（作品集）==================== */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 三欄均分 */
+            gap: 30px;
+        }
+
+        .portfolio-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #f43f5e; /* 霓虹粉上邊框重點 */
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Hover 放大效果 */
+        .portfolio-card:hover {
+            transform: scale(1.05); /* 放大 105% */
+            box-shadow: 
+                0 15px 50px rgba(244, 63, 94, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .portfolio-card h3 {
+            color: #f43f5e;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .portfolio-card p {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        /* ==================== 響應式設計（手機版）==================== */
+        @media (max-width: 768px) {
+            /* Hero Section 改為上下排列 */
+            .hero-container {
+                flex-direction: column;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            /* 頭像縮小 */
+            .hero-avatar {
+                flex: 0 0 200px;
+            }
+
+            .avatar-circle {
+                width: 200px;
+                height: 200px;
+            }
+
+            .avatar-circle img {
+                width: 180px;
+                height: 180px;
+            }
+
+            .avatar-placeholder {
+                font-size: 4rem;
+            }
+
+            /* 標題字體縮小 */
+            .section-title {
+                font-size: 2rem;
+            }
+
+            /* About 與 Portfolio 改為單欄 */
+            .about-grid,
+            .portfolio-grid {
+                grid-template-columns: 1fr; /* 一欄 */
+                gap: 20px;
+            }
+
+            /* 調整 padding */
+            section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- ==================== Hero Section（首頁）==================== -->
+    <section class="hero">
+        <div class="hero-container">
+            <!-- 左側：文字內容 -->
+            <div class="hero-content">
+                <h1>何恩宇</h1>
+                <p>我是一個想要學習各種專業知識的學生</p>
+            </div>
+            
+            <!-- 右側：圓形頭像 -->
+            <div class="hero-avatar">
+                <div class="avatar-circle">
+                    <!-- 可以替換成真實圖片：<img src="your-photo.jpg" alt="何恩宇"> -->
+                    <div class="avatar-placeholder">何</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== About Section（關於我）==================== -->
+    <section id="about">
+        <h2 class="section-title">關於我</h2>
+        
+        <div class="about-grid">
+            <!-- 學歷卡片 -->
+            <div class="glass-card about-card">
+                <h3>🎓 學歷</h3>
+                <ul>
+                    <li>大甲高工</li>
+                </ul>
+            </div>
+
+            <!-- 經歷卡片 -->
+            <div class="glass-card about-card">
+                <h3>💼 經歷</h3>
+                <ul>
+                    <li>學過簡單的 3D 建模</li>
+                    <li>開過一個 Minecraft 伺服器</li>
+                    <li>自學組裝電腦，DIY 一台 NAS</li>
+                    <li>自學過架設網頁</li>
+                </ul>
+            </div>
+
+            <!-- 想學習的方向卡片 -->
+            <div class="glass-card about-card">
+                <h3>🎯 想學習的方向</h3>
+                <ul>
+                    <li>機械設計</li>
+                    <li>MCU（微控制器）</li>
+                    <li>電路設計</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== Portfolio Section（作品集）==================== -->
+    <section id="portfolio">
+        <h2 class="section-title">作品集</h2>
+        
+        <div class="portfolio-grid">
+            <!-- 作品 1 -->
+            <div class="portfolio-card">
+                <h3>Minecraft Server Project</h3>
+                <p>架設並管理一個 Minecraft 多人遊戲伺服器，學習伺服器管理與社群經營。</p>
+            </div>
+
+            <!-- 作品 2 -->
+            <div class="portfolio-card">
+                <h3>NAS DIY Project</h3>
+                <p>自學組裝個人 NAS 系統，實作資料儲存與網路檔案管理，提升硬體實作能力。</p>
+            </div>
+
+            <!-- 作品 3 -->
+            <div class="portfolio-card">
+                <h3>Personal Website Practice</h3>
+                <p>自學網頁開發，使用 HTML 與 CSS 打造個人網站，展現前端技術學習成果。</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
